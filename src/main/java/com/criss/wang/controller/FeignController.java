@@ -13,9 +13,24 @@ public class FeignController implements FeignApi{
 
 	@Override
 	@RequestMapping(value = "/fegin", method = RequestMethod.GET)
-	public String feginTest(@RequestParam(value = "name", required = false) String name) {
+	public String feginTest(@RequestParam(value = "name", required = false) String name){
+		try{
+			Thread.sleep(3000);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 		if (!StringUtils.isEmpty(name))
 			return name;
 		return "wangqiubao";
+	}
+
+	@Override
+	@RequestMapping(value = "/fallback", method = RequestMethod.GET)
+	public String fallBackTest(@RequestParam(value = "name", required = false) String name){
+		if(!StringUtils.isEmpty(name)){
+			return name;
+		}
+		return "wangqiubao test one program";
 	}
 }
